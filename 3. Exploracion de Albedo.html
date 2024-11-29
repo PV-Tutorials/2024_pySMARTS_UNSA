@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2 - Beginner - Time Resolved Albedo &#8212; 2024 pySMARTS UNSA</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3. Exploracion de Albedo';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 1 - Weather Data: Accesing it, understanding it, visualizing it!" href="4.%20Bajar%20Datos%20Climaticos%20de%20NSRDB.html" />
+    <link rel="prev" title="1 - Beginner - Plot Spectra and Albedos from SMARTS" href="2.%20Efecto%20de%20aerosoles.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Bienvenida.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/tutorial_banner.PNG" class="logo__image only-light" alt="2024 pySMARTS UNSA - Home"/>
+    <img src="_static/tutorial_banner.PNG" class="logo__image only-dark pst-js-only" alt="2024 pySMARTS UNSA - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Bienvenida.html">
+                    Bievenid@s!
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0.%20Introduccion%20a%20Jupyter%20y%20Python.html">Welcome to Python, Jupyter, and Google Collab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.%20Uso%20simple%20de%20pySMARTS.html">1 - Beginner - Plot Spectra and Albedos from SMARTS</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="2.%20Efecto%20de%20aerosoles.html">1 - Beginner - Plot Spectra and Albedos from SMARTS</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2 - Beginner - Time Resolved Albedo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.%20Bajar%20Datos%20Climaticos%20de%20NSRDB.html">Tutorial 1 - Weather Data: Accesing it, understanding it, visualizing it!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.%20Calculo%20de%20Produccion%20de%20PV.html">Tutorial 2 - POA Irradiance &amp; Module Temperature</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/PV-Tutorials/2024_pySMARTS_UNSA/blob/main/3. Exploracion de Albedo.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PV-Tutorials/2024_pySMARTS_UNSA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PV-Tutorials/2024_pySMARTS_UNSA/issues/new?title=Issue%20on%20page%20%2F3. Exploracion de Albedo.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/3. Exploracion de Albedo.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2 - Beginner - Time Resolved Albedo</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-and-plot-time-resolved-smarts-albedo">Generate and Plot Time Resolved SMARTS Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#necessary-variables">1. Necessary Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-spectral-albedo">2. Generate Spectral Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-albedo">3. Plotting the Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-vs-local-ground-reflectance">4. Zonal vs Local Ground Reflectance</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="beginner-time-resolved-albedo">
+<h1>2 - Beginner - Time Resolved Albedo<a class="headerlink" href="#beginner-time-resolved-albedo" title="Link to this heading">#</a></h1>
+<section id="generate-and-plot-time-resolved-smarts-albedo">
+<h2>Generate and Plot Time Resolved SMARTS Albedo<a class="headerlink" href="#generate-and-plot-time-resolved-smarts-albedo" title="Link to this heading">#</a></h2>
+<hr class="docutils" />
+<p>This journal will walk through the generation of spectral albedo profiles with pySMARTS. The primary focus is on time-resolved albedo, so we will be generating and plotting these reflectance profiles for the same ground material in the same location for varying hours of the day. To close the journal is a brief look at Zonal and Local ground reflectance. The demo location is Golden, Colorado.</p>
+<p>Contents:</p>
+<ol>
+    <li> <a href='#s1'> Define Necessary Variables </a></li>
+    <li> <a href='#s2'> Generate Spectral Albedo </a></li>
+    <li> <a href='#s3'> Plot Albedo </a></li>
+    <li> <a href='#s4'> Zonal vs. Local Ground Reflectance </a>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pySMARTS</span>
+
+<span class="c1"># plotting paramters</span>
+<span class="c1"># these are visual changes only and have no bearing on the use of pySMARTS</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;timezone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Etc/GMT+7&#39;</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;family&#39;</span> <span class="p">:</span> <span class="s1">&#39;DejaVu Sans&#39;</span><span class="p">,</span>
+<span class="s1">&#39;weight&#39;</span> <span class="p">:</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+<span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pySMARTS</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># plotting paramters</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># these are visual changes only and have no bearing on the use of pySMARTS</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;timezone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Etc/GMT+7&#39;</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pySMARTS&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This information helps with debugging and getting support :)</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">platform</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Working on a &quot;</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">(),</span> <span class="n">platform</span><span class="o">.</span><span class="n">release</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Python version &quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pandas version &quot;</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pySMARTS version &quot;</span><span class="p">,</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Working on a  Windows 10
+Python version  3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:03:56) [MSC v.1929 64 bit (AMD64)]
+Pandas version  2.2.2
+pySMARTS version  0.0.1a1.dev14+g1573ee8.d20241128
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SMARTSPATH</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;C:\Users\sayala\Documents\GitHub\py-SMARTS\SMARTS&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id='s1'></a></p>
+</section>
+<section id="necessary-variables">
+<h2>1. Necessary Variables<a class="headerlink" href="#necessary-variables" title="Link to this heading">#</a></h2>
+<p>For pySMARTS, all variables are maintained as strings. For any simulation, we need to define the following:</p>
+<ul class="simple">
+<li><p><strong>Output Type</strong>: string of space separated integers. See <em><a class="reference external" href="http://main.py">main.py</a></em> for the full list. This can be DNI, DHI, GHI, Alb, and more.</p></li>
+<li><p><strong>Date and Time</strong>: in strings, we need year, month, day, and hour. Each field should be in 2-digit strings padded with zeroes, except year, which is 4 digits. Example: 2 pm on May 21th 2021 is defined as <code class="docutils literal notranslate"><span class="pre">YEAR='2020',</span> <span class="pre">MONTH='05',DAY='21',HOUR='14'</span></code></p></li>
+<li><p><strong>Location</strong>: Latitude, Longitude, Altitude (in km) and timezone (<span class="math notranslate nohighlight">\(\pm\)</span> from UTM)</p></li>
+<li><p><strong>Ground Material</strong>: See <em><a class="reference external" href="http://main.py">main.py</a></em> for the complete list of available ground materials. Common examples: Soil, Concrete, Grass, DryGrass, Snow</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify Desired Output</span>
+<span class="n">IOUT</span> <span class="o">=</span> <span class="s1">&#39;30 31&#39;</span> <span class="c1"># Zonal and Local Ground Reflectance</span>
+
+<span class="c1"># Define Date, Time, and Location (ex: Golden, CO)</span>
+<span class="n">YEAR</span> <span class="o">=</span> <span class="s1">&#39;2021&#39;</span>
+<span class="n">MONTH</span> <span class="o">=</span> <span class="s1">&#39;05&#39;</span>
+<span class="n">DAY</span> <span class="o">=</span> <span class="s1">&#39;21&#39;</span>
+<span class="n">HOUR</span> <span class="o">=</span> <span class="s1">&#39;14&#39;</span>
+<span class="n">LATIT</span> <span class="o">=</span> <span class="s1">&#39;39.7&#39;</span>
+<span class="n">LONGIT</span> <span class="o">=</span> <span class="s1">&#39;-105&#39;</span>
+<span class="n">ALTIT</span> <span class="o">=</span> <span class="s1">&#39;1.7&#39;</span> <span class="c1"># km above sea level</span>
+<span class="n">ZONE</span> <span class="o">=</span> <span class="s1">&#39;-7&#39;</span> <span class="c1"># Timezone</span>
+<span class="n">MAT</span> <span class="o">=</span> <span class="s1">&#39;Soil&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id='s2'></a></p>
+</section>
+<section id="generate-spectral-albedo">
+<h2>2. Generate Spectral Albedo<a class="headerlink" href="#generate-spectral-albedo" title="Link to this heading">#</a></h2>
+<p>When using pySMARTS directly, we will call the <code class="docutils literal notranslate"><span class="pre">SMARTSTimeLocation()</span></code> funciton. This uses the variables we defined above in the order they were defined.
+A few notes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">MAT</span></code> is optional and will default to the “<em>LiteSoil</em>” ground material.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SMARTSTimeLocation()</span></code> may halt with the error:</p>
+<p><code class="docutils literal notranslate"><span class="pre">EmptyDataError:</span> <span class="pre">No</span> <span class="pre">columns</span> <span class="pre">to</span> <span class="pre">parse</span> <span class="pre">from</span> <span class="pre">file</span></code>.</p>
+<p>This will happen when requesting data for any hour of the day with insufficient light. In the example below, if we pass <code class="docutils literal notranslate"><span class="pre">HOUR='04'</span></code> (4:00 am), the script would halt with this error.</p>
+</li>
+</ul>
+<p>For the example below, we will call the function for three different hours in the day and store them as explicit variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Albedo at 8am</span>
+<span class="n">demo08</span> <span class="o">=</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">SMARTSTimeLocation</span><span class="p">(</span><span class="n">IOUT</span><span class="o">=</span><span class="n">IOUT</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">,</span> <span class="n">DAY</span><span class="o">=</span><span class="n">DAY</span><span class="p">,</span> <span class="n">HOUR</span><span class="o">=</span><span class="s1">&#39;08&#39;</span><span class="p">,</span>
+                                    <span class="n">LATIT</span><span class="o">=</span><span class="n">LATIT</span><span class="p">,</span> <span class="n">LONGIT</span><span class="o">=</span><span class="n">LONGIT</span><span class="p">,</span> <span class="n">ALTIT</span><span class="o">=</span><span class="n">ALTIT</span><span class="p">,</span> <span class="n">ZONE</span><span class="o">=</span><span class="n">ZONE</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">MAT</span><span class="p">,</span> <span class="n">SMARTSPATH</span><span class="o">=</span><span class="n">SMARTSPATH</span><span class="p">)</span>
+
+<span class="c1"># Albedo at 12pm (noon)</span>
+<span class="n">demo12</span> <span class="o">=</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">SMARTSTimeLocation</span><span class="p">(</span><span class="n">IOUT</span><span class="o">=</span><span class="n">IOUT</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">,</span> <span class="n">DAY</span><span class="o">=</span><span class="n">DAY</span><span class="p">,</span> <span class="n">HOUR</span><span class="o">=</span><span class="s1">&#39;12&#39;</span><span class="p">,</span>
+                                    <span class="n">LATIT</span><span class="o">=</span><span class="n">LATIT</span><span class="p">,</span> <span class="n">LONGIT</span><span class="o">=</span><span class="n">LONGIT</span><span class="p">,</span> <span class="n">ALTIT</span><span class="o">=</span><span class="n">ALTIT</span><span class="p">,</span> <span class="n">ZONE</span><span class="o">=</span><span class="n">ZONE</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">MAT</span><span class="p">,</span> <span class="n">SMARTSPATH</span><span class="o">=</span><span class="n">SMARTSPATH</span><span class="p">)</span>
+
+<span class="c1"># Albedo at 4pm</span>
+<span class="n">demo16</span> <span class="o">=</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">SMARTSTimeLocation</span><span class="p">(</span><span class="n">IOUT</span><span class="o">=</span><span class="n">IOUT</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">,</span> <span class="n">DAY</span><span class="o">=</span><span class="n">DAY</span><span class="p">,</span> <span class="n">HOUR</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">,</span>
+                                    <span class="n">LATIT</span><span class="o">=</span><span class="n">LATIT</span><span class="p">,</span> <span class="n">LONGIT</span><span class="o">=</span><span class="n">LONGIT</span><span class="p">,</span> <span class="n">ALTIT</span><span class="o">=</span><span class="n">ALTIT</span><span class="p">,</span> <span class="n">ZONE</span><span class="o">=</span><span class="n">ZONE</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">MAT</span><span class="p">,</span> <span class="n">SMARTSPATH</span><span class="o">=</span><span class="n">SMARTSPATH</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><a id='s3'></a></p>
+</section>
+<section id="plotting-the-albedo">
+<h2>3. Plotting the Albedo<a class="headerlink" href="#plotting-the-albedo" title="Link to this heading">#</a></h2>
+<p>Next we’ll look at the plotted albedo from the hours generated. We’ll do this side by side, then overlaid. Finally, we’ll take a look at all the daylight hours simultaneously.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">axs</span> <span class="ow">in</span> <span class="n">ax</span><span class="p">:</span>
+    <span class="n">axs</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Golden, CO - 8 am&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo08</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span> <span class="n">demo08</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;12 pm&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo12</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span> <span class="n">demo12</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;4 pm&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo16</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span> <span class="n">demo16</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/85dbb2c83ddaa59f508a13ff0b939db02a4474cfb4f80b265f588ab9b15812ae.png" src="_images/85dbb2c83ddaa59f508a13ff0b939db02a4474cfb4f80b265f588ab9b15812ae.png" />
+</div>
+</div>
+<p>Next, we’ll overlay two hours on the same axis</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo08</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">demo08</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;08:00 am&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo12</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">demo12</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;12:00 pm&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Spectral Reflectance - Hourly&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/397a1aff9871a22ad5d9724a47286d1412ee422ecb9ea0b1a719798768bc7c7b.png" src="_images/397a1aff9871a22ad5d9724a47286d1412ee422ecb9ea0b1a719798768bc7c7b.png" />
+</div>
+</div>
+<p>Finally, let’s take a look at the generated spectral albedo for all dalylight hours.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">DF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">demo08</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">DF</span><span class="p">[</span><span class="s1">&#39;Wvlgth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">demo08</span><span class="o">.</span><span class="n">Wvlgth</span>
+<span class="n">DL</span> <span class="o">=</span> <span class="n">DF</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>    
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">SMARTSTimeLocation</span><span class="p">(</span><span class="n">IOUT</span><span class="o">=</span><span class="n">IOUT</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">,</span> <span class="n">DAY</span><span class="o">=</span><span class="n">DAY</span><span class="p">,</span> <span class="n">HOUR</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">t</span><span class="si">:</span><span class="s1">02</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                                        <span class="n">LATIT</span><span class="o">=</span><span class="n">LATIT</span><span class="p">,</span> <span class="n">LONGIT</span><span class="o">=</span><span class="n">LONGIT</span><span class="p">,</span> <span class="n">ALTIT</span><span class="o">=</span><span class="n">ALTIT</span><span class="p">,</span> <span class="n">ZONE</span><span class="o">=</span><span class="n">ZONE</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">MAT</span><span class="p">)</span>
+    <span class="n">DF</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">Zonal_ground_reflectance</span>
+    <span class="n">DL</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">Local_ground_reflectance</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">2500</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">DL</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">DL</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">DL</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Golden, CO - Hourly Reflectance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/756f8cbf798f0e91737f4a1280dfdae2ed0b6fd869716f30f47169e97f73e65d.png" src="_images/756f8cbf798f0e91737f4a1280dfdae2ed0b6fd869716f30f47169e97f73e65d.png" />
+</div>
+</div>
+<p><a id='s4'></a></p>
+</section>
+<section id="zonal-vs-local-ground-reflectance">
+<h2>4. Zonal vs Local Ground Reflectance<a class="headerlink" href="#zonal-vs-local-ground-reflectance" title="Link to this heading">#</a></h2>
+<p>Here we compare the two types of albedo available in pySMARTS.</p>
+<ul class="simple">
+<li><p><strong>Zonal</strong>: <code class="docutils literal notranslate"><span class="pre">IOUT</span> <span class="pre">=</span> <span class="pre">'30'</span></code> This is the albedo most applicable in applications <span class="math notranslate nohighlight">\(\geq\)</span> 10 <span class="math notranslate nohighlight">\(km^2\)</span></p></li>
+<li><p><strong>Local</strong>: <code class="docutils literal notranslate"><span class="pre">IOUT</span> <span class="pre">=</span> <span class="pre">'31'</span></code> Use this albedo for smaller views <span class="math notranslate nohighlight">\(&lt;\)</span> 10 <span class="math notranslate nohighlight">\(km^2\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vDZ</span> <span class="o">=</span> <span class="n">DF</span><span class="p">[</span><span class="n">DF</span><span class="o">.</span><span class="n">Wvlgth</span><span class="o">&lt;=</span><span class="mi">1200</span><span class="p">]</span>
+<span class="n">vDL</span> <span class="o">=</span> <span class="n">DL</span><span class="p">[</span><span class="n">DL</span><span class="o">.</span><span class="n">Wvlgth</span><span class="o">&lt;=</span><span class="mi">1200</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vDZ</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">vDZ</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Zonal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vDL</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">vDL</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Local&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">MAT</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/048242ba7dc4f848c4da87fc8dcda2f2e4b6b825977c6d891bf79830354802c3.png" src="_images/048242ba7dc4f848c4da87fc8dcda2f2e4b6b825977c6d891bf79830354802c3.png" />
+</div>
+</div>
+<p>Finally, let’s show the same comparison with a different ground material. Below is the Zonal and Local reflectance for snow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">demo</span> <span class="o">=</span> <span class="n">pySMARTS</span><span class="o">.</span><span class="n">SMARTSTimeLocation</span><span class="p">(</span><span class="n">IOUT</span><span class="o">=</span><span class="n">IOUT</span><span class="p">,</span> <span class="n">YEAR</span><span class="o">=</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">MONTH</span><span class="o">=</span><span class="n">MONTH</span><span class="p">,</span> <span class="n">DAY</span><span class="o">=</span><span class="n">DAY</span><span class="p">,</span> <span class="n">HOUR</span><span class="o">=</span><span class="s1">&#39;08&#39;</span><span class="p">,</span>
+                                    <span class="n">LATIT</span><span class="o">=</span><span class="n">LATIT</span><span class="p">,</span> <span class="n">LONGIT</span><span class="o">=</span><span class="n">LONGIT</span><span class="p">,</span> <span class="n">ALTIT</span><span class="o">=</span><span class="n">ALTIT</span><span class="p">,</span> <span class="n">ZONE</span><span class="o">=</span><span class="n">ZONE</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="s1">&#39;Snow&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">demo</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">demo</span><span class="o">.</span><span class="n">Wvlgth</span><span class="p">,</span><span class="n">demo</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Snow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f5b966c211f3576edc7a10c63c3ec7c2d8c60ab9a391ac4933021159646c7705.png" src="_images/f5b966c211f3576edc7a10c63c3ec7c2d8c60ab9a391ac4933021159646c7705.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "PV-Tutorials/2024_pySMARTS_UNSA",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2.%20Efecto%20de%20aerosoles.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">1 - Beginner - Plot Spectra and Albedos from SMARTS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4.%20Bajar%20Datos%20Climaticos%20de%20NSRDB.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 1 - Weather Data: Accesing it, understanding it, visualizing it!</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-and-plot-time-resolved-smarts-albedo">Generate and Plot Time Resolved SMARTS Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#necessary-variables">1. Necessary Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-spectral-albedo">2. Generate Spectral Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-albedo">3. Plotting the Albedo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#zonal-vs-local-ground-reflectance">4. Zonal vs Local Ground Reflectance</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Silvana Ovaitt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
