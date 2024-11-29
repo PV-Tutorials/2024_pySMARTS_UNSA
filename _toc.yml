@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: Bienvenida
+chapters:
+- file: 0. Introduccion a Jupyter y Python
+- file: 1. Uso simple de pySMARTS
+- file: 2. Efecto de aerosoles
+- file: 3. Exploracion de Albedo
+- file: 4. Bajar Datos Climaticos de NSRDB
+- file: 5. Calculo de Produccion de PV
