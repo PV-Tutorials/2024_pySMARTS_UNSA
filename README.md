@@ -17,7 +17,7 @@ you can click the button below:
 </a>
 
 You can also select Colaboratory from the launch icon at the top of each tutorial
-in the [Jupyter book](https://pvsc-tutorials.github.io/2024_pySMARTS_UNSA/Bienvenida.html).
+in the [Jupyter book](https://pv-tutorials.github.io/2024_pySMARTS_UNSA/Bienvenida.html).
 
 ### Licensing
 
